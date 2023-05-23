@@ -34,4 +34,9 @@ public class HeroController {
     public HttpStatus delete(@PathVariable Long id){
         return heroService.delete(id);
     }
+
+    @GetMapping("{name}")
+    public Hero findById(@PathVariable String name){
+        return heroService.findByName(name);
+    }
 }

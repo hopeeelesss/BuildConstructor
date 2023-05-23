@@ -51,4 +51,8 @@ public class HeroService {
         heroRepo.deleteById(id);
         return HttpStatus.OK;
     }
+
+    public Hero findByName(String name){
+        return heroRepo.findByName(name);
+    }
 }
