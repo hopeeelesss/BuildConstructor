@@ -1,0 +1,14 @@
+.HeroStats{
+    display: flex;
+    flex-direction: row;
+    font-size: 110%;
+}
+
+.HeroStats > *{
+    /*vertical-align: middle;*/
+}
+
+.Info{
+    display: flex;
+    align-items: center;
+}

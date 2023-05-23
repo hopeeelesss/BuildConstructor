@@ -1,0 +1,18 @@
+.item .deleteBtn{
+    position:relative;
+    background: red;
+    color: white;
+    left: -22.5%;
+    top: -49px;
+}
+
+.item{
+    margin: 5px;
+}
+
+.slots{
+    display: flex;
+    flex-direction: row;
+    width: 400px;
+    flex-wrap: wrap;
+}

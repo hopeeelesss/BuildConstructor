@@ -1,0 +1,13 @@
+.Hero{
+    display: flex;
+    flex-direction: row;
+}
+
+.Hero > *{
+    margin: 5px;
+}
+
+.Stats {
+    display: flex;
+    flex-direction: column;
+}

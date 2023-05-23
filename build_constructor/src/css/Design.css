@@ -1,0 +1,9 @@
+div{
+    color: white;
+}
+select, option{
+    background: darkblue;
+    color: white;
+    font-size: 140%;
+    text-align: center;
+}
