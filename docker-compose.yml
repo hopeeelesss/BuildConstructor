@@ -1,0 +1,32 @@
+version: "3"
+services:
+  database:
+    image: postgres:14.5
+    environment:
+      POSTGRES_DB: build_constructor_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    #    container_name: localhost
+    restart: always
+    volumes:
+      - ./database/db.sql:/docker-entrypoint-initdb.d/1.sql
+    ports:
+      - "5432:5432"
+
+  server:
+    container_name: build_constructor
+    #    restart: always
+    build: ./deploy/
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+
+  client:
+    container_name: client_build_constructor
+    build: ./build_constructor/
+    ports:
+      - "3000:3000"
+    links:
+      - server
+    command: npm start
