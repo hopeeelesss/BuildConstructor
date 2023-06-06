@@ -14,9 +14,9 @@ services:
       - "5432:5432"
 
   server:
-    container_name: build_constructor
-    #    restart: always
-    build: ./deploy/
+    container_name: build_constructor_server
+    restart: always
+    build: ./build_constructor_server/
     ports:
       - "8080:8080"
     depends_on:
@@ -24,7 +24,7 @@ services:
 
   client:
     container_name: client_build_constructor
-    build: ./build_constructor/
+    build: ./build_constructor_client/
     ports:
       - "3000:3000"
     links:
