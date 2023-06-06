@@ -351,6 +351,7 @@ COPY public.abilities (ability_id, info, name, text, hero_id) FROM stdin;
 2	Перемещение на короткую дистанцию, позволяющее ворваться в схватку или быстро из неё сбежать.	BLINK	\N	\N
 3	Пассивно увеличивает сопротивление магическому урону. Можно применить, чтобы создать вокруг себя противомагический щит, который полностью блокирует и отражает все направленные заклинания обратно во врага.	COUNTERSPELL	\N	\N
 8	Герой прыгает к указанному врагу, а затем с повышенной скоростью атакует его и ближайших противников. На время действия способности герой становится неуязвимым.	OMNISLASH	\N	\N
+57	Приводит врага в бешенство, нанося ему урон, пока он кого-нибудь не убьёт или действие способности не закончится.	BATTLE_HUNGER	\N	\N
 1	Каждая атака сжигает ману цели и наносит ей урон, равный доле от сожжённой маны. Замедляет жертв, у которых нет маны.	MANA_BREAK	\N	\N
 4	Кратковременно оглушает вражескую цель, а затем наносит ей и всем окружающим её противникам урон, пропорциональный числу отсутствующей у неё маны.	MANA_VOID	\N	\N
 5	Герой крутится в вихре сокрушительных ударов клинком, становясь невосприимчивым к эффектам, получая +80% к сопротивлению магии и нанося урон врагам поблизости.	BLADE_FURY	\N	\N
@@ -364,6 +365,9 @@ COPY public.abilities (ability_id, info, name, text, hero_id) FROM stdin;
 14	Призывает столб пламени, который оглушает врагов и наносит им урон.	LIGHT_STRIKE_ARRAY	\N	\N
 15	Slaaaave	FIERY_SOUL	\N	\N
 16	Выпускает разряд молнии в одного врага, нанося сокрушительный урон.	LAGUNA_BLADE	\N	\N
+56	Герой бросает вызов ближайшим врагам, заставляя их атаковать его, а также получает бонус к броне на время действия способности.	BERSERKERS_CALL	\N	\N
+58	После определённого числа полученных атак герой прокручивает вокруг себя топор, нанося чистый урон всем врагам неподалёку.	COUNTER_HELIX	\N	\N
+59	Герой находит слабую точку врага и наносит ему чистый урон.	CULLING_BLADE	\N	\N
 \.
 
 
@@ -382,6 +386,13 @@ COPY public.attributes (attributes_id, agility, intelligence, movespeed, strengt
 54	23	30	290	20	Hero	\N	\N
 55	23	30	290	20	Hero	\N	\N
 102	23	30	290	20	Hero	\N	\N
+152	0	3	0	0	Item	\N	\N
+153	2	2	0	2	Item	\N	\N
+154	0	0	0	6	Item	\N	\N
+155	6	0	0	0	Item	\N	\N
+156	0	6	0	0	Item	\N	\N
+157	4	4	0	4	Item	\N	\N
+159	20	18	315	25	Hero	\N	\N
 \.
 
 
@@ -410,6 +421,7 @@ COPY public.heroes (hero_id, name, attributes_id, parameters_id) FROM stdin;
 2	Anti-Mage	52	52
 3	Juggernaut	53	53
 4	Lina	102	102
+53	Axe	159	159
 \.
 
 
@@ -430,6 +442,10 @@ COPY public.heroes_abilities (hero_hero_id, abilities_ability_id) FROM stdin;
 4	14
 4	15
 4	16
+53	56
+53	57
+53	58
+53	59
 \.
 
 
@@ -450,6 +466,12 @@ COPY public.items (item_id, name, attributes_id, parameters_id) FROM stdin;
 54	Iron_Branch	4	4
 55	Gauntlets_of_Strength	5	5
 56	Slippers_of_Agility	6	6
+102	Mantle_of_Intelligence	152	152
+103	Circlet	153	153
+104	Belt_of_Strength	154	154
+105	Band_of_Elvenskin	155	155
+106	Robe_of_the_Magi	156	156
+107	Crown	157	157
 \.
 
 
@@ -476,6 +498,13 @@ COPY public.parameters (parameter_id, armor, attack_speed, damage, magical_damag
 54	0	0	0	0	string	0	Hero	0	\N	\N
 55	0	0	0	0	string	0	Hero	0	\N	\N
 102	0	0	0	0	string	0	Hero	0	\N	\N
+152	0	0	0	0	string	0	Item	0	\N	\N
+153	0	0	0	0	string	0	Item	0	\N	\N
+154	0	0	0	0	string	0	Item	0	\N	\N
+155	0	0	0	0	string	0	Item	0	\N	\N
+156	0	0	0	0	string	0	Item	0	\N	\N
+157	0	0	0	0	string	0	Item	0	\N	\N
+159	0	0	0	0	string	0	Hero	0	\N	\N
 \.
 
 
@@ -516,14 +545,14 @@ COPY public.users_user_storage (user_user_id, user_storage_storage_id) FROM stdi
 -- Name: abilities_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.abilities_seq', 51, true);
+SELECT pg_catalog.setval('public.abilities_seq', 101, true);
 
 
 --
 -- Name: attributes_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.attributes_seq', 151, true);
+SELECT pg_catalog.setval('public.attributes_seq', 201, true);
 
 
 --
@@ -544,21 +573,21 @@ SELECT pg_catalog.setval('public.games_seq', 51, true);
 -- Name: heroes_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.heroes_seq', 51, true);
+SELECT pg_catalog.setval('public.heroes_seq', 101, true);
 
 
 --
 -- Name: items_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.items_seq', 101, true);
+SELECT pg_catalog.setval('public.items_seq', 151, true);
 
 
 --
 -- Name: parameters_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.parameters_seq', 151, true);
+SELECT pg_catalog.setval('public.parameters_seq', 201, true);
 
 
 --
