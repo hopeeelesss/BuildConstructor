@@ -264,6 +264,18 @@ CREATE SEQUENCE public.parameters_seq
 ALTER TABLE public.parameters_seq OWNER TO postgres;
 
 --
+-- Name: user_role; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.user_role (
+    user_user_id bigint NOT NULL,
+    role character varying(255)
+);
+
+
+ALTER TABLE public.user_role OWNER TO postgres;
+
+--
 -- Name: user_storage; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -311,7 +323,7 @@ CREATE TABLE public.users (
     user_id bigint NOT NULL,
     login character varying(255),
     role character varying(255),
-    service_id integer
+    password character varying(255)
 );
 
 
@@ -509,6 +521,15 @@ COPY public.parameters (parameter_id, armor, attack_speed, damage, magical_damag
 
 
 --
+-- Data for Name: user_role; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.user_role (user_user_id, role) FROM stdin;
+1	USER
+\.
+
+
+--
 -- Data for Name: user_storage; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -528,8 +549,9 @@ COPY public.user_storage_build (user_build_storage_storage_id, build_build_id) F
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.users (user_id, login, role, service_id) FROM stdin;
-89143187	hopeeelesss	USER	89143187
+COPY public.users (user_id, login, role, password) FROM stdin;
+89143187	hopeeelesss	USER	\N
+1	admin	\N	$2a$10$bwNGQPz5PE/iA4ZMl1/F5uh4q55WoU3zNXsbrvpA3HRgBp68qslz.
 \.
 
 
@@ -601,7 +623,7 @@ SELECT pg_catalog.setval('public.user_storage_seq', 1, false);
 -- Name: users_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.users_seq', 1, false);
+SELECT pg_catalog.setval('public.users_seq', 1, true);
 
 
 --
@@ -722,6 +744,14 @@ ALTER TABLE ONLY public.user_storage
 
 ALTER TABLE ONLY public.user_storage
     ADD CONSTRAINT fk3e8j5icjs70mfdahaqrkkgwxb FOREIGN KEY (user_id) REFERENCES public.users(user_id);
+
+
+--
+-- Name: user_role fk8gqp8vkivwjo8us69ct7b35vl; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_role
+    ADD CONSTRAINT fk8gqp8vkivwjo8us69ct7b35vl FOREIGN KEY (user_user_id) REFERENCES public.users(user_id);
 
 
 --
